@@ -2,28 +2,24 @@ const container = document.querySelector(".container");
 const gridCount = 32;
 const gridSizeBtn = document.querySelector(".gridSize");
 const toggleBorder = document.querySelector(".toggle");
+//
 toggleBorder.addEventListener("click", () => {
   container.classList.toggle("showborder");
-  document
-    .querySelectorAll(".row")
-    .forEach((x) => x.classList.toggle("showborder"));
+  [...container.children].forEach((x) => x.classList.toggle("showborder"));
 });
 let isDrawing = false;
 document.addEventListener("dragstart", (e) => e.preventDefault());
 //button click
 function askForSize() {
-  const promptInputValue = window.prompt("grid size? must lower than 100");
-  return promptInputValue;
+  return window.prompt("grid size? must lower than 100");
 }
 gridSizeBtn.addEventListener("click", () => {
-  let userGrid = 101;
-  while (userGrid > 100) {
-    userGrid = askForSize();
-    if (userGrid > 100) alert("to much");
-  }
+  let userGrid;
+  do {
+    userGrid = window.prompt("grid size? must lower than 100");
+  } while (userGrid > 100);
   if (userGrid) {
     while (container.firstChild) {
-      console.log(container.firstChild);
       container.removeChild(container.firstChild);
     }
     generateGrid(userGrid);
