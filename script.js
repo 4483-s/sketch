@@ -7,32 +7,34 @@ for (i = 0; i < gridCount; i++) {
   childRow.style.gap = "0.2rem";
   childRow.classList.add("row");
   for (j = 0; j < gridCount; j++) {
-    const childDiv = document.createElement("div");
-    childDiv.style.backgroundColor = "white";
-    childDiv.classList.add("gr");
-    childDiv.style.width = "2rem";
-    childDiv.style.height = "2rem";
-
-    childDiv.addEventListener("mouseenter", function () {
-      if (!isDrawing) {
-        childDiv.style.backgroundColor = "rgb(200, 210, 210)";
+    const childSquare = document.createElement("div");
+    childSquare.style.backgroundColor = "white";
+    childSquare.classList.add("gr");
+    childSquare.style.width = "2rem";
+    childSquare.style.height = "2rem";
+    let isColored = false;
+    childSquare.addEventListener("mouseenter", function () {
+      if (!isDrawing && !isColored) {
+        childSquare.style.backgroundColor = "rgb(200, 210, 210)";
       } else if (isDrawing) {
-        childDiv.style.backgroundColor = "red";
+        childSquare.style.backgroundColor = "red";
+        isColored = true;
       }
     });
-    childDiv.addEventListener("mousedown", () => {
+    childSquare.addEventListener("mousedown", () => {
       isDrawing = true;
-      childDiv.style.backgroundColor = "red";
+      isColored = true;
+      childSquare.style.backgroundColor = "red";
     });
-    childDiv.addEventListener("mouseleave", () => {
-      if (!isDrawing) {
-        childDiv.style.backgroundColor = "white";
+    childSquare.addEventListener("mouseleave", () => {
+      if (!isDrawing && !isColored) {
+        childSquare.style.backgroundColor = "white";
       }
     });
-    childDiv.addEventListener("mouseup", () => {
+    childSquare.addEventListener("mouseup", () => {
       isDrawing = false;
     });
-    childRow.append(childDiv);
+    childRow.append(childSquare);
   }
   container.append(childRow);
 }
