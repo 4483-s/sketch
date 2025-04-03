@@ -15,3 +15,7 @@ body {
   height: 60rem;
   width: 60rem;
 }
+
+.showborder {
+  gap: 0.1rem;
+}
