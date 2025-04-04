@@ -18,10 +18,10 @@ body {
   background-color: black;
   padding: 3rem;
   align-items: center;
-  height: 60rem;
-  width: 60rem;
+  height: 50rem;
+  width: 50rem;
 }
 
 .showborder {
-  gap: 0.1rem;
+  gap: 0.07rem;
 }

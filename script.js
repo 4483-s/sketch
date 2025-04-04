@@ -2,6 +2,17 @@ const container = document.querySelector(".container");
 const gridCount = 32;
 const gridSizeBtn = document.querySelector(".gridSize");
 const toggleBorder = document.querySelector(".toggle");
+const redBtn = document.querySelector(".red");
+const colourfulBtn = document.querySelector(".colourful");
+
+let red = true;
+let rgb = false;
+redBtn.addEventListener("click", changeColor);
+colourfulBtn.addEventListener("click", changeColor);
+function changeColor() {
+  red = rgb;
+  rgb = !red;
+}
 //
 toggleBorder.addEventListener("click", () => {
   container.classList.toggle("showborder");
@@ -14,15 +25,20 @@ function askForSize() {
   return window.prompt("grid size? must lower than 100");
 }
 gridSizeBtn.addEventListener("click", () => {
+  // container.classList.remove("showborder");
   let userGrid;
   do {
-    userGrid = window.prompt("grid size? must lower than 100");
+    userGrid = +window.prompt("grid size? must lower than 100");
   } while (userGrid > 100);
   if (userGrid) {
     while (container.firstChild) {
       container.removeChild(container.firstChild);
     }
     generateGrid(userGrid);
+
+    if (container.classList.contains("showborder")) {
+      [...container.children].forEach((x) => x.classList.toggle("showborder"));
+    }
   }
 });
 //stop drawing once mouse is up
@@ -52,17 +68,15 @@ function generateGrid(userGrid) {
           childSquare.style.backgroundColor = "rgb(200, 210, 210)";
         }
         if (isDrawing) {
-          childSquare.style.backgroundColor = "red";
-
-          childSquare.style.backgroundColor = generateHex();
+          childSquare.style.backgroundColor = red ? "red" : generateRgb();
           isColored = true;
         }
       });
       childSquare.addEventListener("mousedown", () => {
         isDrawing = true;
         isColored = true;
-        // childSquare.style.backgroundColor = "red";
-        childSquare.style.backgroundColor = generateHex();
+        if (red) childSquare.style.backgroundColor = "red";
+        childSquare.style.backgroundColor = red ? "red" : generateRgb();
       });
       childSquare.addEventListener("mouseup", () => {
         isDrawing = false;
@@ -84,6 +98,11 @@ function generateHex() {
     hexResult += hexRange[Math.floor(Math.random() * 16)];
   }
   return hexResult;
+}
+function generateRgb() {
+  return `rgb(${Math.floor(Math.random() * 180 + 76)}, ${Math.floor(
+    Math.random() * 180 + 76
+  )}, ${Math.floor(Math.random() * 180 + 76)})`;
 }
 
 generateGrid(gridCount);
